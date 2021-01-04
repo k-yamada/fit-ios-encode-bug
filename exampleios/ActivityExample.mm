@@ -132,12 +132,19 @@ public:
     fieldDesc.SetFieldName(0, L"doughnuts_earned");
     fieldDesc.SetUnits(0, L"doughnuts");
 
-    fit::FieldDescriptionMesg fieldDescFrontGearShiftCount;
-    fieldDescFrontGearShiftCount.SetDeveloperDataIndex(0);
-    fieldDescFrontGearShiftCount.SetFieldDefinitionNumber(1);
-    fieldDescFrontGearShiftCount.SetFitBaseTypeId(FIT_BASE_TYPE_UINT16);
-    fieldDescFrontGearShiftCount.SetFieldName(0, L"front_gear_shift_count");
-    fieldDescFrontGearShiftCount.SetUnits(0, L"count");
+    fit::FieldDescriptionMesg fieldDescLapFrontGearShiftCount;
+    fieldDescLapFrontGearShiftCount.SetDeveloperDataIndex(0);
+    fieldDescLapFrontGearShiftCount.SetFieldDefinitionNumber(1);
+    fieldDescLapFrontGearShiftCount.SetFitBaseTypeId(FIT_BASE_TYPE_UINT16);
+    fieldDescLapFrontGearShiftCount.SetFieldName(0, L"front_gear_shift_count");
+    fieldDescLapFrontGearShiftCount.SetUnits(0, L"count");
+
+    fit::FieldDescriptionMesg fieldDescSessionFrontGearShiftCount;
+    fieldDescSessionFrontGearShiftCount.SetDeveloperDataIndex(0);
+    fieldDescSessionFrontGearShiftCount.SetFieldDefinitionNumber(2);
+    fieldDescSessionFrontGearShiftCount.SetFitBaseTypeId(FIT_BASE_TYPE_UINT16);
+    fieldDescSessionFrontGearShiftCount.SetFieldName(0, L"front_gear_shift_count");
+    fieldDescSessionFrontGearShiftCount.SetUnits(0, L"count");
 
     for (FIT_UINT8 i = 0; i < 3; i++)
     {
@@ -158,7 +165,8 @@ public:
     [super.fe WriteMesg:fileId];
     [super.fe WriteMesg:devId];
     [super.fe WriteMesg:fieldDesc];
-    [super.fe WriteMesg:fieldDescFrontGearShiftCount];
+    [super.fe WriteMesg:fieldDescLapFrontGearShiftCount];
+    [super.fe WriteMesg:fieldDescSessionFrontGearShiftCount];
 
     for (auto record : records)
     {
@@ -170,7 +178,7 @@ public:
     lap.SetTimestamp(1);
     lap.SetEvent(FIT_EVENT_LAP);
     lap.SetEventType(FIT_EVENT_TYPE_STOP);
-    fit::DeveloperField lapFrontGearShiftCountField(fieldDescFrontGearShiftCount, devId);
+    fit::DeveloperField lapFrontGearShiftCountField(fieldDescLapFrontGearShiftCount, devId);
     lapFrontGearShiftCountField.SetUINT16Value(1);
     lap.AddDeveloperField(lapFrontGearShiftCountField);
     [super.fe WriteMesg:lap];
@@ -181,7 +189,7 @@ public:
     session.SetStartTime(1);
     session.SetTotalElapsedTime(1);
     session.SetSport(FIT_SPORT_CYCLING);
-    fit::DeveloperField sessionFrontGearShiftCountField(fieldDescFrontGearShiftCount, devId);
+    fit::DeveloperField sessionFrontGearShiftCountField(fieldDescSessionFrontGearShiftCount, devId);
     sessionFrontGearShiftCountField.SetUINT16Value(1);
     lap.AddDeveloperField(sessionFrontGearShiftCountField);
     [super.fe WriteMesg:session];

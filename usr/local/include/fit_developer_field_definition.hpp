@@ -47,6 +47,7 @@ public:
 
     FIT_BOOL operator==(const DeveloperFieldDefinition& field) const;
     FIT_BOOL operator!=(const DeveloperFieldDefinition& field) const;
+    DeveloperFieldDefinition& operator=(const DeveloperFieldDefinition& other); // <- Added
     FIT_UINT8 Write(std::ostream &file) const;
 
 private:
